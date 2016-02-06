@@ -22,7 +22,11 @@ class Welcome extends CI_Controller {
 		//$data['palabras'] = $this->palabra->obtener_entidad(2);
 		
 		//ESTAS SON PRUEBAS
-		/*$this->load->library('session');
+		$this->load->model('modelo_session');
+
+		$var= $this->modelo_session->rol("admin");
+		var_dump($var);
+		/*
 		$user = array('name' => 'maggie');
 		$user1 ="maggie";
 		$name= $this->session->set_userdata($user);
@@ -30,7 +34,7 @@ class Welcome extends CI_Controller {
 		$datos = array('name');
 		$this->session->unset_userdata($datos);
 		echo $this->session->has_userdata('name');
-		*/	
+		*/
 
 		/*  ESTO YA TIENE LAS FUNCIONES O ESTRUCTURA QUE MEDIO ACORDAMOS
 		$user= $this->uri->segment(2);
