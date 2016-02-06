@@ -8,44 +8,76 @@
 	class LOGING_Controller extends CI_Controller
 	{
 		
-		function __construct()
+		 public function __construct()
 		{
 			parent::__construct();
 				//cargar librerias, helpers 
 				//clase Session inicializada en el controlador, para poder hacer uso de ella
-				$this->load->library('sesion');
+				$this->load->library('session');
 				//carga el archivo de configuracion
-				$this->config->load->('');
+				//$this->config->load('configsesion');
 				//carga la base de datos
 				$this->load->database();
 				//caraga el helper URL 
-				$this->load->helper->('url');
-		}
+				//$this->load->helper('url');
+				$this->load->model('modelo_session');
+		}		
+	}//login controller
 
-		/**
+	/**
 		* clase par evitar ciclo
 		**/
 		class Loging extends LOGING_Controller
 		{
 			
-			function __construct()
+			 public function __construct()
 			{
 				parent::__construct();
 			}
 
-	
-			//Preguntamos si la sesion esta activa()
-			if($this->session->userdata('usuario') != NULL){
-				//Va a preguntar que tipo de usuario es o sesion es
-		        $usuario = $this->session->userdata();
+			
 
-			}else{//Si la sesion no esta activa
-				//Te manda al login
-			}
+			public function valida_sesion(){
+
+				$datos = array('user');
+				$this->session->unset_userdata($datos);
 
 
-		}
-	}
+				$user= $this->uri->segment(2);
+				$pass= $this->uri->segment(3);
+				echo $user;
+				$arr = array('user'=> '$user',
+							'pass'=> '$pass');
+				if($this->session->has_userdata('user')){
+					$rol = $this->modelo_session->rol($user);
+					echo $rol;
+					if($rol == "admin"){
+						return "admin";
+					}else{
+						return "user";
+					}
+
+				}else{
+					
+					 $profile = $this->modelo_session->verificaUser($user);
+					if($profile == false){//usuario no existe
+						echo "Usuariio no existe";
+					}else{//usuario existe
+						$this->session->set_userdata($profile);
+						if($profile['Rol'] == "admin"){
+							return "admin";
+						}else{
+							return "user";
+						}
+
+					}
+				}//else
+				return "";
+
+			}//valida session
+
+			
+			}//login controller
 
 
 ?>
