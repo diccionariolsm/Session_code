@@ -15,11 +15,11 @@
 				//clase Session inicializada en el controlador, para poder hacer uso de ella
 				$this->load->library('session');
 				//carga el archivo de configuracion
-				//$this->config->load->('');
+				//$this->config->load('configsesion');
 				//carga la base de datos
 				$this->load->database();
 				//caraga el helper URL 
-				//$this->load->helper->('url');
+				//$this->load->helper('url');
 				$this->load->model('modelo_session');
 		}		
 	}//login controller
@@ -41,15 +41,15 @@
 
 				$datos = array('user');
 				$this->session->unset_userdata($datos);
-				
+
 
 				$user= $this->uri->segment(2);
 				$pass= $this->uri->segment(3);
-
+				echo $user;
 				$arr = array('user'=> '$user',
 							'pass'=> '$pass');
 				if($this->session->has_userdata('user')){
-					$rol = $this->modelo_session->rol($arr);
+					$rol = $this->modelo_session->rol($user);
 					echo $rol;
 					if($rol == "admin"){
 						return "admin";
@@ -58,14 +58,19 @@
 					}
 
 				}else{
-					//Su el usuario esta en la base, se inicializa sesión
-					if($this->modelo_session->verificaUser($user)){
-						$this->session->set_userdata($arr);
-						echo $this->session->has_userdata('user') ;
-					}//if
-					else{
-						echo "Usuario incorrecto";
-					}//else
+					
+					 $profile = $this->modelo_session->verificaUser($user);
+					if($profile == false){//usuario no existe
+						echo "Usuariio no existe";
+					}else{//usuario existe
+						$this->session->set_userdata($profile);
+						if($profile['Rol'] == "admin"){
+							return "admin";
+						}else{
+							return "user";
+						}
+
+					}
 				}//else
 				return "";
 
