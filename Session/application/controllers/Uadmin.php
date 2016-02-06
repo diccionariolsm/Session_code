@@ -20,13 +20,3 @@ class Uadmin extends Loging{
 		}
 
 	}
-
-<<<<<<< HEAD
-	public function valsesion(){
-		
-	}
-=======
-	
->>>>>>> refs/remotes/origin/master
-	
-}
