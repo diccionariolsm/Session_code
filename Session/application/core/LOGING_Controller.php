@@ -58,19 +58,7 @@
 					}
 
 				}else{
-					
-					 $profile = $this->modelo_session->verificaUser($user);
-					if($profile == false){//usuario no existe
-						echo "Usuariio no existe";
-					}else{//usuario existe
-						$this->session->set_userdata($profile);
-						if($profile['Rol'] == "admin"){
-							return "admin";
-						}else{
-							return "user";
-						}
-
-					}
+					redirect('');
 				}//else
 				return "";
 

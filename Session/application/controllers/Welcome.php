@@ -58,4 +58,12 @@ class Welcome extends CI_Controller {
 
 	}
 
+	public function succes() {
+		$this->load->view('success');
+	}
+
+	public function error_access(){
+		$this->load->view('error_session');
+	}
+
 }
