@@ -14,6 +14,7 @@
 				//cargar librerias, helpers 
 				//clase Session inicializada en el controlador, para poder hacer uso de ella
 				$this->load->library('session');
+				$this->load->helper('url');
 				//carga el archivo de configuracion
 				//$this->config->load('configsesion');
 				//carga la base de datos
@@ -33,6 +34,7 @@
 			 public function __construct()
 			{
 				parent::__construct();
+				$this->valida_sesion();
 			}
 
 			
@@ -49,16 +51,10 @@
 				$arr = array('user'=> '$user',
 							'pass'=> '$pass');
 				if($this->session->has_userdata('user')){
-					$rol = $this->modelo_session->rol($user);
-					echo $rol;
-					if($rol == "admin"){
-						return "admin";
-					}else{
-						return "user";
-					}
+					redirect('succes');
 
 				}else{
-					redirect('');
+					redirect('error_access');
 				}//else
 				return "";
 
