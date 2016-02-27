@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends Loging{
 
 	//Se carga el modelo
 	public function __construct(){
@@ -56,6 +56,14 @@ class Welcome extends CI_Controller {
 
 		*/
 
+	}
+
+	public function succes() {
+		$this->load->view('success');
+	}
+
+	public function error_access(){
+		$this->load->view('error_session');
 	}
 
 }
