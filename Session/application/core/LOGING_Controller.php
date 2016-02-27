@@ -8,44 +8,60 @@
 	class LOGING_Controller extends CI_Controller
 	{
 		
-		function __construct()
+		 public function __construct()
 		{
 			parent::__construct();
 				//cargar librerias, helpers 
 				//clase Session inicializada en el controlador, para poder hacer uso de ella
-				$this->load->library('sesion');
+				$this->load->library('session');
+				$this->load->helper('url');
 				//carga el archivo de configuracion
-				$this->config->load->('');
+				//$this->config->load('configsesion');
 				//carga la base de datos
 				$this->load->database();
 				//caraga el helper URL 
-				$this->load->helper->('url');
-		}
+				//$this->load->helper('url');
+				$this->load->model('modelo_session');
+		}		
+	}//login controller
 
-		/**
+	/**
 		* clase par evitar ciclo
 		**/
 		class Loging extends LOGING_Controller
 		{
 			
-			function __construct()
+			 public function __construct()
 			{
 				parent::__construct();
+				$this->valida_sesion();
 			}
 
-	
-			//Preguntamos si la sesion esta activa()
-			if($this->session->userdata('usuario') != NULL){
-				//Va a preguntar que tipo de usuario es o sesion es
-		        $usuario = $this->session->userdata();
+			
 
-			}else{//Si la sesion no esta activa
-				//Te manda al login
-			}
+			public function valida_sesion(){
+
+				$datos = array('user');
+				$this->session->unset_userdata($datos);
 
 
-		}
-	}
+				$user= $this->uri->segment(2);
+				$pass= $this->uri->segment(3);
+				echo $user;
+				$arr = array('user'=> '$user',
+							'pass'=> '$pass');
+				if($this->session->has_userdata('user')){
+					redirect('succes');
+
+				}else{
+					redirect('error_access');
+				}//else
+				return "";
+
+			}//valida session
+
+			
+			}//login controller
 
 
 ?>
