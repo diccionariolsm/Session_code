@@ -25,7 +25,7 @@
 		}		
 	}//login controller
 
-	/**
+		/**
 		* clase par evitar ciclo
 		**/
 		class Loging extends LOGING_Controller
